@@ -1,40 +1,54 @@
-import { getProducts } from './fetch-helpers.js';
-import { renderProducts, renderError } from './dom-helpers.js';
+import { getProducts, getProductById, searchProducts } from './fetch-helpers.js';
+import { renderProducts, renderProductDetails, renderError } from './dom-helpers.js';
 
-getProducts().then((products) => {
-    if (products.data === null) {
-        renderError('Failed to load products.');
+const productsList = document.querySelector('#products-list');
+const searchForm = document.querySelector('#search-form');
+const errorEl = document.querySelector('#error-message');
+
+
+function clearError() {
+    errorEl.textContent = '';
+}
+
+getProducts().then(({ data, error }) => {
+    if (error) {
+        renderError(error.message);
     } else {
-        renderProducts(products.data);
+        renderProducts(data);
     }
 });
 
-const productsList = document.querySelector('#products-list');
+
 productsList.addEventListener('click', (event) => {
     const li = event.target.closest('li');
     if (!li) return;
 
-    getProductById(li.dataset.productId).then((product) => {
-        if (product === null) {
-            renderError('Failed to load product details.');
-        } else {
-            renderProductDetails(product);
-        }
-    });
+    clearError();
+
+    getProductById(li.dataset.productId)
+        .then(({ data, error }) => {
+            if (error) {
+                renderError(error.message);
+            } else {
+                renderProductDetails(data);
+            }
+        });
 });
 
-const searchProducts = document.querySelector('#search-form');
-productsList.addEventListener('click', (event) => {
-    const li = event.target.closest('li');
-    if (!li) return;
 
-    const id = li.dataset.id;
+searchForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    clearError();
 
-    getProductById(li.dataset.productId).then((product) => {
-        if (product === null) {
-            renderError('Failed to load product details.');
-        } else {
-            renderProducts(product);
-        }
-    });
+    const formData = new FormData(searchForm);
+    const query = formData.get('query');
+
+    const { data, error } = await searchProducts(query);
+
+    if (error) {
+        renderError(error.message);
+    } else {
+        renderProducts(data);
+        searchForm.reset();
+    }
 });

@@ -1,6 +1,7 @@
 export const renderProducts = (products) => {
     const productsList = document.querySelector('#products-list');
     const productCount = document.querySelector('#product-count');
+
     productsList.innerHTML = '';
     productCount.textContent = products.length;
 
@@ -15,48 +16,30 @@ export const renderProducts = (products) => {
         const h3 = document.createElement('h3');
         h3.textContent = product.title;
 
-        const info = document.createElement('p');
-        info.textContent = `$${product.price}`;
+        const p = document.createElement('p');
+        p.textContent = `$${product.price}`;
 
-        li.append(img, h3, info);
+        li.append(img, h3, p);
         productsList.append(li);
-    })
+    });
 };
 
 
 export const renderProductDetails = (product) => {
+    const detailsSection = document.querySelector('#product-details');
+
     detailsSection.classList.remove('hidden');
 
-    detailsSection.innerHTML = '';
-    detailsSection.removeAttribute('hidden');
-
-    const li = document.createElement('li');
-    li.dataset.productId = product.id;
-
-    const img = document.createElement('img');
-    img.src = product.thumbnail;
-    img.alt = product.title;
-
-    const h2 = document.createElement('h2');
-    h2.textContent = product.title;
-
-    const info = document.createElement('p');
-    info.textContent = `${product.count} · ${product.price}`;
-
-    const productsH3 = document.createElement('h3');
-    productsH3.textContent = 'product-description';
-
-    const productsList = document.createElement('ul');
-    product.details.forEach((product) => {
-        const li = document.createElement('li');
-        li.textContent = product;
-        productsList.append(li);
-    });
-
-    detailsSection.append(h2, img, info, productssH3, productsList);
+    document.querySelector('#product-title').textContent = product.title;
+    document.querySelector('#product-thumbnail').src = product.thumbnail;
+    document.querySelector('#product-thumbnail').alt = product.title;
+    document.querySelector('#product-price').textContent = product.price;
+    document.querySelector('#product-description').textContent = product.description;
+    document.querySelector('#product-rating').textContent = product.rating;
 };
 
 
 export const renderError = (message) => {
-
-}
+    const errorEl = document.querySelector('#error-message');
+    errorEl.textContent = message;
+};

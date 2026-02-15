@@ -1,12 +1,8 @@
-export const fetchData = (url) => {
-
-};
-
 export const getProducts = () => {
     return fetch('https://dummyjson.com/products')
         .then((response) => {
             if (!response.ok) {
-                throw Error(`Fetch failed. ${response.status} ${response.statusText}`);
+                throw new Error(`Fetch failed. ${response.status}`);
             }
             return response.json();
         })
@@ -14,49 +10,43 @@ export const getProducts = () => {
             return { data: data.products, error: null };
         })
         .catch((error) => {
-            return { data: null, error: error };
+            return { data: null, error };
         });
 };
+
+
 export const getProductById = (id) => {
-    return fetch(`https://dummyjson.com/products/1`)
+    return fetch(`https://dummyjson.com/products/${id}`)
         .then((response) => {
             if (!response.ok) {
-                throw Error(`Fetch failed. ${response.status} ${response.statusText}`);
+                throw new Error(`Fetch failed. ${response.status}`);
             }
             return response.json();
         })
         .then((data) => {
-            return { data: responseData, error: null };
+            return { data, error: null };
         })
         .catch((error) => {
-            return { data: null, error: error };
+            return { data: null, error };
         });
 };
 
 
 export async function searchProducts(query) {
-    const URL = (`https://dummyjson.com/products/search?q=phone`);
-
     try {
-        const response = await fetch(url, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify(formData)
-        });
+        const response = await fetch(
+            `https://dummyjson.com/products/search?q=${query}`
+        );
 
         if (!response.ok) {
-            throw new Error('Failed to send message.');
+            throw new Error(`Fetch failed. ${response.status}`);
         }
 
-        const responseData = await response.json();
+        const data = await response.json();
 
-        return { data: responseData, error: null };
-
+        return { data: data.products, error: null };
     } catch (error) {
-        return { data: null, error: error };
+        return { data: null, error };
     }
 }
 
