@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product Browser</title>
   <link rel="stylesheet" href="./styles.css">
 </head>
+
 <body>
   <header>
     <h1>Product Browser</h1>
   </header>
-  
+
   <p id="error-message"></p>
 
   <main>
@@ -18,7 +20,7 @@
       <h2 id="product-title">Essence Mascara Lash Princess</h2>
       <img src="" alt="" id="product-thumbnail">
       <p>Price: $<span id="product-price"></span></p>
-      <p id="product-description">The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.</p>
+      <p id="product-description"></p>
       <p>Rating: <span id="product-rating"></span> / 5</p>
     </section>
 
@@ -32,17 +34,18 @@
         </div>
         <button type="submit">Search</button>
       </form>
-
+      <section id="details-section" class="hidden"></section>
       <ul id="products-list">
         <!-- fallback element -->
         <li data-product-id="1">
-          <img src="https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp" alt="Essence Mascara Lash Princess">
+          <img src="https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp"
+            alt="Essence Mascara Lash Princess">
           <h3>Essence Mascara Lash Princess</h3>
           <p>$9.99</p>
         </li>
       </ul>
     </section>
-  
+
   </main>
   <script type="module" src="./src/main.js"></script>
 </body>
